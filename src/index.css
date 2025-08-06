@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Avenir";
+  src: url("/fonts/Avenir/Avenir-Regular.ttf") format("truetype");
+ 
+}
+
+@theme {
+  --color-primary: #1E63A9;
+  --color-primary-dull: #4C7DA6;
+  --color-secondary: #FCDE0E;
+}
+
+body {
+  font-family: "Avenir", sans-serif;
+}
+
+.active hr{
+    @apply block
+}
