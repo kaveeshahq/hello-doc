@@ -1,19 +1,16 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Avenir";
-  src: url("/fonts/Avenir/Avenir-Regular.ttf") format("truetype");
- 
-}
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 @theme {
   --color-primary: #1E63A9;
   --color-primary-dull: #4C7DA6;
   --color-secondary: #FCDE0E;
+  --color-third :#04B2F1;
 }
 
 body {
-  font-family: "Avenir", sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .active hr{
