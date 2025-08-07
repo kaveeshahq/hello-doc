@@ -18,7 +18,7 @@ const IconButton = ({
   
   // Variant styles
   const variants = {
-    primary: "bg-primary text-white  hover:bg-secondary hover:text-black focus:ring-gray-500",
+    primary: "bg-primary text-white  hover:bg-secondary hover:text-black",
     secondary: "bg-secondary text-primary hover:bg-primary hover:text-secondary focus:ring-secondary",
     outline: "border-2 border-white text-white hover:bg-white hover:text-primary focus:ring-white",
     dark: "bg-gray-800 text-white hover:bg-gray-700 focus:ring-gray-600"
