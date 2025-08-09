@@ -9,7 +9,7 @@ import {
 
 const Footer = () => {
   return (
-    <div className="md:mx-10 bg-primary rounded-lg">
+    <div className="md:mx-10 bg-gradient-to-r from-primary to-third rounded-lg">
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm px-6 sm:px-10 md:px-14 lg:px-12 pt-16">
         {/* Left Section */}
         <div>
@@ -50,7 +50,9 @@ const Footer = () => {
                 background:
                   "linear-gradient(90deg, #FCDE0E 0%, #FCDE0E 50%, #04B2F1 50%, #04B2F1 100%)",
               }}
-            ></div>
+            >
+
+          </div>
           </div>
           <ul className="flex flex-col gap-3">
             <li>

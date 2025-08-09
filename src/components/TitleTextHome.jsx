@@ -5,7 +5,7 @@ const TitleTextHome = ({
   className = "", 
   size = "lg",
   textColor = "text-primary",
-  underlinePosition = "center"
+  underlinePosition = "center",
 }) => {
   // Size variants
   const sizes = {

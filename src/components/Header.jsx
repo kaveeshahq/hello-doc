@@ -25,7 +25,7 @@ const Header = () => {
         <IconButton
           href="#speciality"
           icon={FaPlay}
-            variant="secondary"
+            variant="primary"
           className="mt-2 font-bold"
         >
           Book Appointment
