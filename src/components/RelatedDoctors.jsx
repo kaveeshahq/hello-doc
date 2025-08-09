@@ -1,20 +1,31 @@
-import React, { useContext } from "react";
-import TitleTextHome from "./TitleTextHome";
-import IconButton from "./IconButton";
-import { useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext";
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from '../context/AppContext'
+import TitleTextHome from './TitleTextHome'
+import { useNavigate } from 'react-router-dom'
+import IconButton from './IconButton'
 
-const TopDoctors = () => {
-  const navigate = useNavigate();
-  const { doctors } = useContext(AppContext);
+const RelatedDoctors = ({docId,speciality}) => {
+
+    const {doctors} = useContext(AppContext)
+
+    const [relDoc, setRelDoc] = useState([])
+
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+     if (doctors.length > 0 && speciality ) {
+        const doctorsData = doctors.filter((doc)=> doc.speciality === speciality && doc._id !== docId)
+        setRelDoc(doctorsData)
+     }
+    },[doctors,speciality,docId])
   return (
     <div className="mt-8 flex flex-col items-center gap-4 my-16 text-gray-600 md:mx-10">
-      <TitleTextHome size="sm">Top Doctors to Book</TitleTextHome>
+      <TitleTextHome size="sm">Related Doctors</TitleTextHome>
       <p className="sm:w-1/3 text-center text-lg">
-        Simply browse through our extensive list of trusted doctors.
+        Simply browse through our extensive list of related doctors to this section.
       </p>
       <div className="w-full grid grid-cols-auto gap-4 pt-5 gap-y-6 px-3 sm:px-0">
-        {doctors.slice(0, 10).map((item, index) => (
+        {relDoc.slice(0, 5).map((item, index) => (
           <div
             onClick={() => {navigate(`/appointments/${item._id}`); scrollTo(0,0)}}
             key={index}
@@ -42,7 +53,7 @@ const TopDoctors = () => {
         More
       </IconButton>
     </div>
-  );
-};
+  )
+}
 
-export default TopDoctors;
+export default RelatedDoctors

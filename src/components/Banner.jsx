@@ -27,7 +27,7 @@ const Banner = () => {
             onClick={() => navigate("/login")}
             icon={FaUserPlus}
             variant="secondary"
-            className="px-8 py-3 mt-6"
+            className="px-8 py-3 mt-6 cursor-pointer"
           >
             Create Account
           </IconButton>
