@@ -5,7 +5,7 @@ import { FaPlay } from "react-icons/fa"; // Add this import
 
 const Header = () => {
   return (
-    <div className="flex flex-col md:flex-row bg-third rounded-lg px-6 md:px-10 lg:px-20">
+    <div className="flex flex-col md:flex-row bg-gradient-to-r from-primary to-third rounded-lg px-6 md:px-10 lg:px-20">
       {/* Left Side */}
       <div className="md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 md:py-[10vw] pr-0 md:pr-8">
         <p className="text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight md:leading-tight lg:leading-tight">
@@ -25,7 +25,7 @@ const Header = () => {
         <IconButton
           href="#speciality"
           icon={FaPlay}
-            variant="primary"
+            variant="secondary"
           className="mt-2 font-bold"
         >
           Book Appointment

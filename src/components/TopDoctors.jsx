@@ -20,7 +20,7 @@ const TopDoctors = () => {
             key={index}
             className="border border-primary rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500 "
           >
-            <img className="bg-primary" src={item.image} alt="" />
+            <img className="bg-gradient-to-r from-primary to-third" src={item.image} alt="" />
             <div className="p-4">
               <div className="flex items-center gap-2 text-sm text-center text-third">
                 <p className="w-2 h-2 bg-secondary animate-pulse rounded-full">{}</p>

@@ -1,5 +1,7 @@
 import React from "react";
 import { FaPlay } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 
 const IconButton = ({ 
   children, 
@@ -15,11 +17,10 @@ const IconButton = ({
 }) => {
   // Base styles
   const baseStyles = "flex items-center gap-2 rounded-full  transition-all duration-300 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100";
-  
   // Variant styles
   const variants = {
     primary: "bg-primary text-white  hover:bg-secondary hover:text-black cursor-pointer",
-    secondary: "bg-secondary text-primary hover:bg-primary hover:text-secondary focus:ring-secondary",
+    secondary: "bg-secondary text-primary hover:bg-primary hover:text-secondary focus:ring-secondary cursor-pointer",
     outline: "border-2 border-white text-white hover:bg-white hover:text-primary focus:ring-white",
     dark: "bg-gray-800 text-white hover:bg-gray-700 focus:ring-gray-600"
   };

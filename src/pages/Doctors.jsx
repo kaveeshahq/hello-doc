@@ -187,14 +187,14 @@ const Doctors = () => {
                 </div>
               ) : (
                 /* Doctors Cards */
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6">
                   {filterDoc.map((item, index) => (
                     <div
                       key={index}
                       className=" border border-gray-200 rounded-xl overflow-hidden cursor-pointer hover:shadow-xl hover:transform hover:translate-y-[-8px] transition-all duration-500 group"
                     >
                       {/* Doctor Image */}
-                      <div className="bg-primary relative overflow-hidden">
+                      <div className="bg-gradient-to-r from-primary to-third relative overflow-hidden">
                         <img 
                           className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" 
                           src={item.image} 

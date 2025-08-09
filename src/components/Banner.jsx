@@ -16,7 +16,7 @@ const Banner = () => {
       </TitleTextHome>
 
       {/* Banner Container */}
-      <div className="flex bg-third rounded-lg px-6 sm:px-10 md:px-14 lg:px-12">
+      <div className="flex bg-gradient-to-r from-primary to-third rounded-lg px-6 sm:px-10 md:px-14 lg:px-12">
         {/* Left Side - Moved more to the left */}
         <div className="flex-1 py-8 sm:py-10 md:py-16 lg:py-24 pr-8">
           <div className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold text-white">
@@ -26,7 +26,7 @@ const Banner = () => {
           <IconButton
             onClick={() => navigate("/login")}
             icon={FaUserPlus}
-            variant="primary"
+            variant="secondary"
             className="px-8 py-3 mt-6 cursor-pointer"
           >
             Create Account
