@@ -402,7 +402,7 @@ const Contact = () => {
       {/* FAQ Quick Links */}
       <div className="text-center bg-gradient-to-r from-primary to-third rounded-2xl p-6 sm:p-8">
         <h2 className="text-2xl font-bold text-white mb-4">
-          Need Quick <span className="text-secondary">Answers?</span>{" "}
+          Need Quick <span className="text-secondary">Answers ?</span>{" "}
         </h2>
         <p className="text-white mb-6">
           Check out our frequently asked questions or browse our help center for
