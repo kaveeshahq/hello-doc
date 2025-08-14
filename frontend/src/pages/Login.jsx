@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import IconButton from "../components/IconButton";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { AppContext } from "../context/AppContext";
+import axios from 'axios'
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { backendUrl, token, setToken } = useContext(AppContext);
+
   const [state, setState] = useState("Sign Up");
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -31,20 +40,47 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
+const onSubmitHandler = async (event) => {
+  event.preventDefault();
 
-    if (!validateForm()) return;
+  if (!validateForm()) return;
 
-    setIsLoading(true);
+  setIsLoading(true); // ✅ Show spinner immediately
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      // Handle success/error here
-      console.log("Form submitted:", { name, email, password, state });
-    }, 2000);
-  };
+  try {
+    if (state === "Sign Up") {
+      const { data } = await axios.post(`${backendUrl}/api/user/register`, {
+        name,
+        password,
+        email,
+      });
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        setToken(data.token);
+      } else {
+        toast.error(data.message);
+      }
+    } else {
+      const { data } = await axios.post(`${backendUrl}/api/user/login`, {
+        password,
+        email,
+      });
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+        setToken(data.token);
+      } else {
+        toast.error(data.message);
+      }
+    }
+  } catch (error) {
+    toast.error(error.message);
+  } finally {
+    setIsLoading(false); // ✅ Stop spinner after request finishes
+  }
+};
+
 
   const handleStateChange = (newState) => {
     setState(newState);
@@ -54,6 +90,12 @@ const Login = () => {
       setName("");
     }
   };
+
+  useEffect(()=>{
+    if (token) {
+      navigate('/')
+    }
+  },[token])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-third/5 flex items-center justify-center px-4 py-8">
@@ -221,7 +263,7 @@ const Login = () => {
 
             {/* Submit Button */}
             <div className="justify-center">
-              <IconButton disabled={isLoading} variant="primary">
+              <IconButton type='submit' disabled={isLoading} variant="primary">
                 {isLoading ? (
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

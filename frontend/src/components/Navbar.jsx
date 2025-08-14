@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
 import IconButton from "./IconButton";
@@ -9,13 +9,21 @@ import {
   FaCalendarAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { AppContext } from "../context/AppContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const {token , setToken} = useContext(AppContext)
+
   const [showMenu, setShowMenu] = useState(false);
-  const [token, setToken] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+
+  const logout = () => {
+    setToken(false)
+    localStorage.removeItem('token')
+  }
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -151,7 +159,7 @@ const Navbar = () => {
 
                   <div
                     onClick={() => {
-                      setToken(false);
+                      logout
                       setShowDropdown(false);
                     }}
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 cursor-pointer transition-all duration-200 group/item border-t border-gray-100 mt-2 pt-3"
