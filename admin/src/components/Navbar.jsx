@@ -18,7 +18,7 @@ const Navbar = () => {
         <img src={assets.logo} alt="Logo" className="h-10 rounded-full w-auto" />
         <p className="font-semibold border px-2.5 py-0.5 rounded-full text-lg">{aToken ? 'Admin' : 'Doctor'}</p>
       </div>
-      <button onClick={logout} className="bg-secondary text-black font-medium px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors">
+      <button onClick={logout} className="bg-secondary text-black font-semibold px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors">
         Logout
       </button>
     </div>
