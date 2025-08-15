@@ -2,6 +2,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import { v2 as cloudinary } from "cloudinary";
 
 // API to register user
 
@@ -68,4 +69,61 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { registerUSer, loginUser };
+// getProfile
+const getProfile = async (req, res) => {
+  try {
+    const userData = await userModel.findById(req.userId).select("-password");
+    if (!userData) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    res.json({ success: true, userData });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// updateProfile
+const updateProfile = async (req, res) => {
+  try {
+    const { name, phone, address, dob, gender } = req.body;
+    const imageFile = req.file;
+
+    if (!name || !phone || !dob || !gender) {
+      return res.json({ success: false, message: "Data has been missed" });
+    }
+
+    const updateData = {
+      name,
+      phone,
+      address: address ? safeJsonParse(address, {}) : {},
+      dob,
+      gender,
+    };
+
+    if (imageFile) {
+      const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        resource_type: "image",
+      });
+      updateData.image = imageUpload.secure_url;
+    }
+
+    await userModel.findByIdAndUpdate(req.userId, updateData);
+
+    res.json({ success: true, message: "Profile Updated" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// Helper for safe JSON parsing
+function safeJsonParse(str, fallback) {
+  try {
+    return JSON.parse(str);
+  } catch {
+    return fallback;
+  }
+}
+
+export { registerUSer, loginUser, getProfile, updateProfile };

@@ -14,7 +14,7 @@ import { AppContext } from "../context/AppContext";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const {token , setToken} = useContext(AppContext)
+  const {token , setToken , userData} = useContext(AppContext)
 
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -95,7 +95,7 @@ const Navbar = () => {
             >
               <img
                 className="w-10 h-10 rounded-full object-cover border-2 border-secondary shadow-sm"
-                src={assets.profile_pic}
+                src={userData.image}
                 alt="Profile"
               />
               <span className="hidden lg:block text-primary font-semibold">
@@ -124,7 +124,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-3 p-3 border-b border-gray-100">
                   <img
                     className="w-12 h-12 rounded-full object-cover border-2 border-secondary"
-                    src={assets.profile_pic}
+                    src={userData.image}
                     alt="Profile"
                   />
                 </div>
@@ -251,7 +251,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg mb-4">
                   <img
                     className="w-12 h-12 rounded-full object-cover border-2 border-secondary"
-                    src={assets.profile_pic}
+                    src={userData.image}
                     alt="Profile"
                   />
                   <span className="text-primary font-semibold text-lg">Profile</span>

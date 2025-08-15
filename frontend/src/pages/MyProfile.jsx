@@ -1,26 +1,47 @@
 import React, { useState } from "react";
-import { assets } from "../assets/assets";
 import IconButton from "../components/IconButton";
 import { FaEdit, FaSave, FaCamera } from "react-icons/fa";
 import TitleTextHome from "../components/TitleTextHome";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const MyProfile = () => {
-  const [userData, setUserData] = useState({
-    name: "Glenn Dinal",
-    image: assets.profile_pic,
-    email: "glenndinal@gmail.com",
-    phone: "+94 76 63 65 729",
-    address: {
-      line1: "No 143 , Galle Rd",
-      line2: "Moratumulla , Moratuwa",
-    },
-    gender: "Male",
-    dob: "1999-12-15",
-  });
-
+  
+  const {userData, setUserData  , token , backendUrl, loadUserProfileData} = useContext(AppContext)
+  
   const [isEdit, setIsEdit] = useState(false);
+  const [image,setimage] = useState(false)
+  
+  const updateUserProfileData = async () => {
+    try {
+      const formData = new FormData()
 
-  return (
+      formData.append('name' , userData.name )
+      formData.append('phone' , userData.phone )
+      formData.append('address' , JSON.stringify(userData.address) )
+      formData.append('gender' , userData.gender )
+      formData.append('dob' , userData.dob )
+       
+
+     const {data} = await axios.post(backendUrl + '/api/user/update-profile' , formData , {headers: {token}} )
+
+     if (data.success) {
+      toast.success(data.message)
+       await  loadUserProfileData()
+       setIsEdit(false)
+     }else{
+      toast.error(data.message)
+     }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+      
+    }
+  }
+
+  return userData && (
     <div className="max-w-4xl mx-auto px-4 ">
       {/* Page Header */}
       <div className="mb-8">
@@ -36,6 +57,9 @@ const MyProfile = () => {
           <div className="flex flex-col sm:flex-row items-center gap-6">
             {/* Profile Image */}
             <div className="relative group">
+              {
+              
+              }
               <img
                 className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white shadow-lg"
                 src={userData.image}
@@ -259,7 +283,7 @@ const MyProfile = () => {
           {isEdit && (
             <div className="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-gray-200">
               <IconButton
-                onClick={() => setIsEdit(false)}
+                onClick={updateUserProfileData}
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200"
                 icon={FaSave}
               >
