@@ -82,7 +82,9 @@ const AllAppointments = () => {
                   <span className="px-3 py-1 text-xs rounded-full bg-red-100 text-red-500 font-medium">
                     Cancelled
                   </span>
-                ) : (
+                ) : item.isCompleted ? <p>  <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-500 font-medium">
+                    Completed
+                  </span></p> : (
                   <img
                     onClick={() => cancelAppoinment(item._id)}
                     className="w-8 cursor-pointer hover:opacity-80 transition"

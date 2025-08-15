@@ -4,7 +4,8 @@ import { assets } from "../../assets/assets";
 import { AppContext } from "../../context/AppContext";
 
 const Dashboard = () => {
-  const { aToken, getDashData, dashData, cancelAppoinment } = useContext(AdminContext);
+  const { aToken, getDashData, dashData, cancelAppoinment } =
+    useContext(AdminContext);
   const { slotDateFormat } = useContext(AppContext);
 
   useEffect(() => {
@@ -54,7 +55,9 @@ const Dashboard = () => {
                   <img className="w-8" src={stat.icon} alt={stat.label} />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
+                  <p className="text-2xl font-bold text-gray-800">
+                    {stat.value}
+                  </p>
                   <p className="text-sm text-gray-500">{stat.label}</p>
                 </div>
               </div>
@@ -80,13 +83,24 @@ const Dashboard = () => {
                   alt={item.docData.name}
                 />
                 <div className="flex-1 text-sm">
-                  <p className="text-gray-800 font-medium">{item.docData.name}</p>
-                  <p className="text-gray-500 text-xs">{slotDateFormat(item.slotDate)}</p>
+                  <p className="text-gray-800 font-medium">
+                    {item.docData.name}
+                  </p>
+                  <p className="text-gray-500 text-xs">
+                    {slotDateFormat(item.slotDate)}
+                  </p>
                 </div>
                 {item.cancelled ? (
                   <span className="px-3 py-1 text-xs rounded-full bg-red-100 text-red-500 font-medium">
                     Cancelled
                   </span>
+                ) : item.isCompleted ? (
+                  <p>
+                    {" "}
+                    <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-500 font-medium">
+                      Completed
+                    </span>
+                  </p>
                 ) : (
                   <img
                     onClick={() => cancelAppoinment(item._id)}

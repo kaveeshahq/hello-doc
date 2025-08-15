@@ -3,13 +3,14 @@ import { assets } from "../assets/assets";
 import { useContext } from "react";
 import { AdminContext } from "../context/AdminContext";
 import axios from "axios";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContext";
 
 const Login = () => {
   const [state, setState] = useState("Admin");
 
   const { setAToken, backendUrl } = useContext(AdminContext);
-
+  const { setDToken } = useContext(DoctorContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,10 +26,22 @@ const Login = () => {
         if (data.success) {
           localStorage.setItem("aToken", data.token);
           setAToken(data.token);
-        }else{
-            toast.error(data.message)
+        } else {
+          toast.error(data.message);
         }
       } else {
+        const { data } = await axios.post(backendUrl + "/api/doctor/login", {
+          email,
+          password,
+        });
+        if (data.success) {
+          localStorage.setItem("dToken", data.token);
+          setDToken(data.token);
+          console.log(data.token);
+          
+        } else {
+          toast.error(data.message);
+        }
       }
     } catch (error) {}
   };
@@ -67,7 +80,7 @@ const Login = () => {
 
         <button
           type="submit"
-          className="w-full py-2 mt-2 rounded-lg bg-primary text-white font-medium hover:bg-secondary hover:text-black transition-colors"
+          className="w-full py-2 mt-2 cursor-pointer rounded-lg bg-primary text-white font-medium hover:bg-secondary hover:text-black transition-colors"
         >
           Login
         </button>

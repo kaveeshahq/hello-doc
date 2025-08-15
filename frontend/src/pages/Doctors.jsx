@@ -206,10 +206,10 @@ const Doctors = () => {
                       {/* Doctor Info */}
                       <div className="p-6">
                         {/* Availability Status */}
-                        <div className="flex items-center gap-2 text-sm mb-3">
-                          <div className="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
-                          <span className="text-third font-medium">Available Today</span>
-                        </div>
+                                   <div className={`flex items-center gap-2 text-sm text-center ${item.available ? 'text-third' : 'text-gray-500' } `}>
+                <p className={`w-2 h-2 ${item.available ? 'bg-secondary' : 'bg-gray-500' }  animate-pulse rounded-full`}>{}</p>
+                <p>{item.available ? 'Available' : 'Unavailable' }</p>
+              </div>
 
                         {/* Doctor Name */}
                         <h3 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-primary transition-colors duration-300">

@@ -6,7 +6,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { FaBan, FaCut } from 'react-icons/fa'
+import { FaBan, FaCheck, FaCut } from 'react-icons/fa'
 
 const MyAppoinments = () => {
   const {backendUrl,token , getDoctorsData} = useContext(AppContext)
@@ -81,9 +81,10 @@ const MyAppoinments = () => {
               </div>
               <div></div>
               <div className='flex flex-col gap-2 justify-end'>
-                {!item.cancelled && <IconButton>Pay Online</IconButton> }
-                {!item.cancelled && <IconButton onClick={()=>cancelAppointment(item._id)}>Cancel Appointment</IconButton>  }
-                {item.cancelled && <IconButton icon={FaBan}>Appointment Cancelled</IconButton>}
+                {!item.cancelled && !item.isCompleted && <IconButton>Pay Online</IconButton> }
+                {!item.cancelled && !item.isCompleted &&  <IconButton onClick={()=>cancelAppointment(item._id)}>Cancel Appointment</IconButton>  }
+                {item.cancelled &&  <IconButton icon={FaBan}>Appointment Cancelled</IconButton>}
+                {item.isCompleted && <IconButton icon={FaCheck}>Appointment Completed</IconButton>}
               </div>
             </div>
           </div>

@@ -1,0 +1,126 @@
+import React, { useContext, useEffect } from "react";
+import { DoctorContext } from "../../context/DoctorContext";
+import { assets } from "../../assets/assets";
+import { AppContext } from "../../context/AppContext";
+
+const DoctorDashboard = () => {
+  const {
+    getDashData,
+    dashData,
+    dToken,
+    completeAppointment,
+    cancelAppointment,
+  } = useContext(DoctorContext);
+  const { currency, slotDateFormat } = useContext(AppContext);
+
+  useEffect(() => {
+    if (dToken) {
+      getDashData();
+    }
+  }, [dToken]);
+
+  const stats = [
+    {
+      label: "Earnings",
+      value: `${currency}${dashData?.earnings || 0}`,
+      icon: assets.earning_icon,
+      color: "bg-blue-100",
+    },
+    {
+      label: "Appointments",
+      value: dashData?.appointments || 0,
+      icon: assets.appointments_icon,
+      color: "bg-green-100",
+    },
+    {
+      label: "Patients",
+      value: dashData?.patients || 0,
+      icon: assets.patients_icon,
+      color: "bg-purple-100",
+    },
+  ];
+
+  return (
+    dashData && (
+      <div className="m-5 space-y-8">
+        {/* Stats Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {stats.map((stat, idx) => (
+            <div
+              key={idx}
+              className="flex items-center gap-4 bg-white p-5 rounded-xl border border-primary shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer"
+            >
+              <div
+                className={`w-14 h-14 flex items-center justify-center rounded-full ${stat.color}`}
+              >
+                <img className="w-8" src={stat.icon} alt={stat.label} />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
+                <p className="text-sm text-gray-500">{stat.label}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Latest Bookings */}
+        <div className="bg-white rounded-xl border border-primary shadow-sm overflow-hidden">
+          <div className="flex items-center gap-3 px-5 py-4 bg-gray-50 border-b border-primary">
+            <img className="w-6" src={assets.list_icon} alt="Latest Bookings" />
+            <p className="font-semibold text-gray-800">Latest Bookings</p>
+          </div>
+          <div className="divide-y divide-gray-200">
+            {dashData.latestAppointments.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center px-6 py-4 gap-4 hover:bg-gray-50 transition"
+              >
+                <img
+                  className="rounded-full w-12 h-12 object-cover border border-gray-200"
+                  src={item.userData.image}
+                  alt={item.userData.name}
+                />
+                <div className="flex-1">
+                  <p className="text-gray-800 font-medium text-sm sm:text-base">
+                    {item.userData.name}
+                  </p>
+                  <p className="text-gray-500 text-xs">
+                    {slotDateFormat(item.slotDate)}
+                  </p>
+                </div>
+
+                {/* Status or Actions */}
+                {item.cancelled ? (
+                  <span className="px-3 py-1 bg-red-100 text-red-500 rounded-full text-xs font-medium">
+                    Cancelled
+                  </span>
+                ) : item.isCompleted ? (
+                  <span className="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs font-medium">
+                    Completed
+                  </span>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <img
+                      onClick={() => cancelAppointment(item._id)}
+                      className="w-9 cursor-pointer hover:opacity-80 transition"
+                      src={assets.cancel_icon}
+                      alt="Cancel"
+                    />
+                    <img
+                      onClick={() => completeAppointment(item._id)}
+                      className="w-9 cursor-pointer hover:opacity-80 transition"
+                      src={assets.tick_icon}
+                      alt="Confirm"
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  );
+};
+
+export default DoctorDashboard;
