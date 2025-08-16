@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TitleTextHome from '../components/TitleTextHome'
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filteredFaqs, setFilteredFaqs] = useState([])
 
   const faqData = [
     {
@@ -47,37 +49,49 @@ const FAQ = () => {
     }
   ]
 
+  useEffect(() => {
+    setFilteredFaqs(
+      faqData.filter(faq =>
+        faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    )
+  }, [searchTerm])
+
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index)
   }
 
   return (
-    <div>
-      <TitleTextHome>Frequently Asked Questions</TitleTextHome>
-      
-      <div className="mt-6 max-w-4xl mx-auto">
-        <div className="mb-8 text-center">
-          <p className="text-zinc-600 text-lg">
+    <div className="min-h-screen bg-gray-50  px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        <TitleTextHome>Frequently Asked Questions</TitleTextHome>
+
+        <div className="mb-10">
+
+          <p className="text-gray-500 text-lg text-center mt-6 font-medium">
             Find answers to common questions about our healthcare platform and services.
           </p>
         </div>
 
-        <div className="space-y-4">
-          {faqData.map((faq, index) => (
+        <div className="space-y-6">
+          {filteredFaqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-md border border-primary overflow-hidden"
+              className="bg-white rounded-2xl shadow-md border border-primary-dull overflow-hidden transition-all duration-300 hover:shadow-lg"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-primary hover:text-white cursor-pointer transition-colors duration-200"
+                className="w-full px-6 py-5 text-left flex justify-between items-center   transition-colors duration-300 focus:outline-none  "
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
               >
-                <h3 className="text-lg font-semibold text-neutral-800 hover:text-white pr-4">
+                <h3 className="text-xl font-semibold text-primary pr-6">
                   {faq.question}
                 </h3>
                 <div className="flex-shrink-0">
                   <svg
-                    className={`w-5 h-5 transform transition-all duration-200 ${
+                    className={`w-6 h-6 transform transition-transform duration-300 text-primary hover:text-white ${
                       openIndex === index ? 'rotate-180' : ''
                     }`}
                     fill="none"
@@ -95,15 +109,16 @@ const FAQ = () => {
               </button>
               
               <div
-                className={`transition-all duration-300 ease-in-out ${
+                id={`faq-answer-${index}`}
+                className={`transition-all duration-500 ease-in-out ${
                   openIndex === index
                     ? 'max-h-96 opacity-100'
                     : 'max-h-0 opacity-0'
                 } overflow-hidden`}
               >
-                <div className="px-6 pb-4 pt-2">
-                  <div className="bg-primary/10 rounded-lg p-4">
-                    <p className="text-zinc-700 leading-relaxed">
+                <div className="px-6 pb-5 pt-3">
+                  <div className="bg-indigo-50/50 rounded-lg p-5">
+                    <p className="text-gray-600 leading-relaxed text-base">
                       {faq.answer}
                     </p>
                   </div>
@@ -111,24 +126,29 @@ const FAQ = () => {
               </div>
             </div>
           ))}
+          {filteredFaqs.length === 0 && (
+            <div className="text-center text-gray-500 py-10 font-medium">
+              No FAQs found matching your search.
+            </div>
+          )}
         </div>
-
-        <div className="mt-12 text-center bg-gray-50 rounded-xl p-8">
-          <h3 className="text-xl font-semibold text-neutral-800 mb-3">
+{/* 
+        <div className="mt-12 text-center bg-white rounded-2xl p-10 shadow-md border border-gray-100">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">
             Still have questions?
           </h3>
-          <p className="text-zinc-600 mb-4">
+          <p className="text-gray-500 mb-6 text-base">
             Can't find the answer you're looking for? Our support team is here to help.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-200">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="bg-indigo-600 text-white px-8 py-3 rounded-full font-medium hover:bg-indigo-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">
               Contact Support
             </button>
-            <button className="border border-primary text-primary px-6 py-3 rounded-lg font-medium hover:bg-primary hover:text-white transition-all duration-200">
+            <button className="border border-indigo-600 text-indigo-600 px-8 py-3 rounded-full font-medium hover:bg-indigo-600 hover:text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">
               Live Chat
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -159,7 +159,7 @@ const Navbar = () => {
 
                   <div
                     onClick={() => {
-                      logout
+                      logout()
                       setShowDropdown(false);
                     }}
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 cursor-pointer transition-all duration-200 group/item border-t border-gray-100 mt-2 pt-3"

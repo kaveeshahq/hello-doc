@@ -17,7 +17,7 @@ import {
   FaCheckCircle,
   FaQuestion,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -384,6 +384,7 @@ const Contact = () => {
               <p className="text-3xl font-bold">15+</p>
               <p className="text-sm opacity-90">Open Positions</p>
             </div>
+            <Link to={'/careers'}>
             <IconButton
               className=" px-8 py-3 font-semibold"
               icon={FaBriefcase}
@@ -395,6 +396,7 @@ const Contact = () => {
             >
               Explore Careers
             </IconButton>
+            </Link>
           </div>
         </div>
       </div>
